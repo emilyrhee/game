@@ -1,0 +1,2 @@
+#!/bin/sh
+node /Users/momo/Documents/software_projects/gaym/server.js &
