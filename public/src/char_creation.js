@@ -27,10 +27,10 @@ skin2.y = 100;
 
 canvas.addEventListener('click', (event) => {
   if (c.isPointInPath(skin1, event.offsetX, event.offsetY))
-    changeSkin(skin1.color);
+    currentSkin = skin1.color;
 
   if (c.isPointInPath(skin2, event.offsetX, event.offsetY))
-    changeSkin(skin2.color);
+    currentSkin = skin2.color;
 });
 
 function changeSkin(s) {
@@ -49,13 +49,15 @@ function skinButton(obj) {
   c.fill(obj);
 }
 
+currentSkin = skin1.color;
+
 function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
   c.drawImage(playerSkin, 0, 0, playerSkin.width, playerSkin.height);  
 
-  changeSkin(skin1.color);
+  changeSkin(currentSkin);
 
   skinButton(skin1);
   skinButton(skin2);
