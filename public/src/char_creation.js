@@ -8,22 +8,19 @@ playerSkin.src = "images/player_skin.png";
 const body = {
   width: playerSkin.width,
   height: playerSkin.height,
-  
-  draw: function() {
-    c.drawImage(playerSkin, 0, 0,
-      this.width, this.height);
-  }
+  x: canvas.width / 12,
+  y: canvas.height / 7
 }
 
 const skin1 = new Path2D();
 skin1.color = '#d4b292';
-skin1.x = 100;
-skin1.y = 100;
+skin1.x = 200;
+skin1.y = 200;
 
 const skin2 = new Path2D();
 skin2.color = '#8a6344';
-skin2.x = 130;
-skin2.y = 100;
+skin2.x = 230;
+skin2.y = 200;
 
 canvas.addEventListener('click', (event) => {
   if (c.isPointInPath(skin1, event.offsetX, event.offsetY))
@@ -36,10 +33,10 @@ canvas.addEventListener('click', (event) => {
 function changeSkin(s) {
   c.fillStyle = s;
   c.globalCompositeOperation = "overlay";
-  c.fillRect(0, 0, playerSkin.width, playerSkin.height);
+  c.fillRect(body.x, body.y, playerSkin.width, playerSkin.height);
   
   c.globalCompositeOperation = 'destination-in';
-  c.drawImage(playerSkin, 0, 0);
+  c.drawImage(playerSkin, body.x, body.y);
   c.globalCompositeOperation = "source-over";
 }
 
@@ -55,7 +52,7 @@ function animate() {
   requestAnimationFrame(animate);
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  c.drawImage(playerSkin, 0, 0, playerSkin.width, playerSkin.height);  
+  c.drawImage(playerSkin, body.x, body.y, playerSkin.width, playerSkin.height);  
 
   changeSkin(currentSkin);
 
