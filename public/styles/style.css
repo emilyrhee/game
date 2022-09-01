@@ -2,3 +2,9 @@ html, body {
   height: 100%;
   width: 100%;
 }
+
+input {
+  position: relative;
+  top: 300px;
+  left: 50px;
+}
