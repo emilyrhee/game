@@ -4,7 +4,7 @@ html, body {
 }
 
 input {
-  position: relative;
+  position: absolute;
   top: 300px;
-  left: 50px;
+  left: 60px;
 }
