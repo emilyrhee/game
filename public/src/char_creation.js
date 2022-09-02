@@ -5,6 +5,8 @@ var nameInput = document.getElementById("name");
 var playerSkin = new Image();
 playerSkin.src = "images/player_skin.png";
 
+//var bangs = new Image();
+//bangs.src = "images/bangs.png"
 
 const body = {
   width: playerSkin.width,
@@ -19,9 +21,14 @@ skin1.x = 200;
 skin1.y = 200;
 
 const skin2 = new Path2D();
-skin2.color = '#8a6344';
-skin2.x = 230;
-skin2.y = 200;
+skin2.color = '#a37e6d';
+skin2.x = skin1.x + 40;
+skin2.y = skin1.y;
+
+const skin3 = new Path2D();
+skin3.color = '#8a6344';
+skin3.x = skin1.x + 80;
+skin3.y = 200;
 
 canvas.addEventListener('click', (event) => {
   if (c.isPointInPath(skin1, event.offsetX, event.offsetY))
@@ -29,6 +36,9 @@ canvas.addEventListener('click', (event) => {
 
   if (c.isPointInPath(skin2, event.offsetX, event.offsetY))
     currentSkin = skin2.color;
+
+  if (c.isPointInPath(skin3, event.offsetX, event.offsetY))
+    currentSkin = skin3.color;
 });
 
 function changeSkin(s) {
@@ -54,10 +64,12 @@ function animate() {
   c.clearRect(0, 0, canvas.width, canvas.height);
 
   c.drawImage(playerSkin, body.x, body.y, playerSkin.width, playerSkin.height);  
+  //c.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
 
   changeSkin(currentSkin);
 
-  skinButton(skin1);
+  skinButton(skin1);  // fix flickering
   skinButton(skin2);
+  skinButton(skin3);
 }
 animate();
