@@ -3,6 +3,17 @@ html, body {
   width: 100%;
 }
 
+#wrapper{
+  position:relative;
+  width:800px;
+  height:600px;
+}
+#canvas2,#canvas{
+  position:absolute; top:0px; left:0px;
+  width:800px;
+  height:600px;
+}
+
 input {
   position: absolute;
   top: 300px;

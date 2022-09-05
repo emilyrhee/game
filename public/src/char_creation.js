@@ -1,5 +1,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
+const canvas2 = document.querySelector('canvas');
+const c2 = canvas2.getContext('2d');
 
 var nameInput = document.getElementById("name");
 var playerSkin = new Image();
