@@ -17,20 +17,25 @@ const body = {
   y: canvas1.height / 7
 }
 
-const skin1 = new Path2D();
+var skin = new Path2D();
+skin.x = 200;
+skin.y = 200;
+skin.draw = function() {
+  skin.rect(this.x, this.y, 20, 20);
+  c2.fillStyle = this.color;
+  c2.fill(skin);
+};
+
+var skin1 = Object.create(skin);
 skin1.color = '#d4b292';
-skin1.x = 200;
-skin1.y = 200;
 
-const skin2 = new Path2D();
+var skin2 = Object.create(skin);
 skin2.color = '#a37e6d';
-skin2.x = skin1.x + 40;
-skin2.y = skin1.y;
+skin2.x = skin.x + 40;
 
-const skin3 = new Path2D();
+var skin3 = Object.create(skin);
 skin3.color = '#8a6344';
-skin3.x = skin1.x + 80;
-skin3.y = 200;
+skin3.x = skin.x + 80;
 
 var currentSkin = skin1.color;
 
@@ -55,8 +60,6 @@ function changeSkin(s) {
   c1.globalCompositeOperation = "source-over";
 }
 
-currentSkin = skin1.color;
-
 function animate() {
   requestAnimationFrame(animate);
   c1.clearRect(0, 0, canvas1.width, canvas1.height);
@@ -67,5 +70,8 @@ function animate() {
 
   c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
 
+  skin1.draw();
+  skin2.draw();
+  skin3.draw();
 }
 animate();
