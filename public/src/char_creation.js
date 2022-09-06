@@ -7,8 +7,8 @@ var nameInput = document.getElementById("name");
 var playerSkin = new Image();
 playerSkin.src = "images/player_skin.png";
 
-//var bangs = new Image();
-//bangs.src = "images/bangs.png"
+var bangs = new Image();
+bangs.src = "images/bangs.png"
 
 const body = {
   width: playerSkin.width,
