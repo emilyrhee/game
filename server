@@ -1,2 +1,4 @@
 #!/bin/sh
+cd /Users/momo/Documents/software_projects/gaym/
 node /Users/momo/Documents/software_projects/gaym/server.js &
+while true; do sleep 1; done
