@@ -17,37 +17,34 @@ const body = {
   y: canvas1.height / 7
 }
 
-var skin = new Path2D();
-skin.x = 200;
-skin.y = 200;
-skin.draw = function() {
-  skin.rect(this.x, this.y, 20, 20);
-  c2.fillStyle = this.color;
-  c2.fill(skin);
-};
+class Skin extends Path2D {
+  constructor(x, y, color) {
+    super(); 
+    this.x = x;
+    this.y = y;
+    this.color = color;
+  }
+  draw() {
+    super.rect(this.x, this.y, 20, 20);
+    c2.fillStyle = this.color;
+    c2.fill(this);
+  }
+}
+Skin.prototype.colors = ['#d4b292','#a37e6d','#8a6344'];
 
-var skin1 = Object.create(skin);
-skin1.color = '#d4b292';
+var skins = [];
 
-var skin2 = Object.create(skin);
-skin2.color = '#a37e6d';
-skin2.x = skin.x + 40;
+for(var i = 0; i < 3; i++) {
+  skins.push(new Skin(200 + 40 * i, 200, Skin.prototype.colors[i]))
+}
 
-var skin3 = Object.create(skin);
-skin3.color = '#8a6344';
-skin3.x = skin.x + 80;
+var currentSkin = Skin.prototype.colors[0];
 
-var currentSkin = skin1.color;
-
-canvas2.addEventListener('click', (event) => {
-  if (c2.isPointInPath(skin1, event.offsetX, event.offsetY))
-    currentSkin = skin1.color;
-
-  if (c2.isPointInPath(skin2, event.offsetX, event.offsetY))
-    currentSkin = skin2.color;
-
-  if (c2.isPointInPath(skin3, event.offsetX, event.offsetY))
-    currentSkin = skin3.color;
+canvas2.addEventListener('click', (e) => {
+  for (var skin of skins) {
+    if (c2.isPointInPath(skin, e.offsetX, e.offsetY))
+      currentSkin = skin.color;
+  }
 });
 
 function changeSkin(s) {
@@ -70,8 +67,11 @@ function animate() {
 
   c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
 
-  skin1.draw();
-  skin2.draw();
-  skin3.draw();
+  for (var skin of skins)
+    skin.draw();
+
+  // skin1.draw();
+  // skin2.draw();
+  // skin3.draw();
 }
 animate();
