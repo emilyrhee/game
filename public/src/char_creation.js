@@ -7,8 +7,8 @@ var nameInput = document.getElementById("name");
 var playerSkin = new Image();
 playerSkin.src = "images/body.png";
 
-// var bangs = new Image();
-// bangs.src = "images/bangs.png"
+var bangs = new Image();
+bangs.src = "images/bangs.png"
 
 const body = {
   width: playerSkin.width,
@@ -35,7 +35,7 @@ Skin.prototype.colors = ['#d4b292','#a37e6d','#8a6344'];
 var skins = [];
 
 for(var i = 0; i < 3; i++) {
-  skins.push(new Skin(200 + 40 * i, 200, Skin.prototype.colors[i]))
+  skins.push(new Skin(250 + 40 * i, 200, Skin.prototype.colors[i]))
 }
 
 var currentSkin = Skin.prototype.colors[0];
@@ -63,10 +63,9 @@ function animate() {
   c2.clearRect(0, 0, canvas2.width, canvas2.height);
 
   c1.drawImage(playerSkin, body.x, body.y, playerSkin.width, playerSkin.height);
-  
   changeSkin(currentSkin);
 
-  // c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
+  c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
 
   for (var skin of skins)
     skin.draw();
@@ -75,4 +74,5 @@ function animate() {
   // skin2.draw();
   // skin3.draw();
 }
+
 animate();

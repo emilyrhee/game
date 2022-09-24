@@ -7,10 +7,14 @@ html, body {
   position: absolute;
 }
 
-canvas {
-  border: 1px solid #d3d3d3;
+canvas1 {
+  border: 1px solid #6f4444;
   top: 0px; 
   left: 0px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 input {  
