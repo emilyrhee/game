@@ -5,10 +5,10 @@ const c2 = canvas2.getContext('2d');
 
 var nameInput = document.getElementById("name");
 var playerSkin = new Image();
-playerSkin.src = "images/player_skin.png";
+playerSkin.src = "images/body.png";
 
-var bangs = new Image();
-bangs.src = "images/bangs.png"
+// var bangs = new Image();
+// bangs.src = "images/bangs.png"
 
 const body = {
   width: playerSkin.width,
@@ -63,9 +63,10 @@ function animate() {
   c2.clearRect(0, 0, canvas2.width, canvas2.height);
 
   c1.drawImage(playerSkin, body.x, body.y, playerSkin.width, playerSkin.height);
+  
   changeSkin(currentSkin);
 
-  c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
+  // c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
 
   for (var skin of skins)
     skin.draw();
