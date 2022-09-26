@@ -4,6 +4,7 @@ const canvas2 = document.getElementById('canvas2');
 const c2 = canvas2.getContext('2d');
 
 var nameInput = document.getElementById("name");
+
 var playerSkin = new Image();
 playerSkin.src = "images/body.png";
 
@@ -68,10 +69,6 @@ function animate() {
 
   for (var skin of skins)
     skin.draw();
-
-  // skin1.draw();
-  // skin2.draw();
-  // skin3.draw();
 }
 
 animate();
