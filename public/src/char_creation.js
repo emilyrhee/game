@@ -10,12 +10,8 @@ playerSkin.src = "images/body.png";
 var bangs = new Image();
 bangs.src = "images/bangs.png"
 
-const body = {
-  width: playerSkin.width,
-  height: playerSkin.height,
-  x: canvas1.width / 12,
-  y: canvas1.height / 7
-}
+const spriteX = canvas1.width / 12;
+const spriteY = canvas1.height / 7
 
 class Skin extends Path2D {
   constructor(x, y, color) {
@@ -50,10 +46,10 @@ canvas2.addEventListener('click', (e) => {
 function changeSkin(s) {
   c1.fillStyle = s;
   c1.globalCompositeOperation = "overlay";
-  c1.fillRect(body.x, body.y, playerSkin.width, playerSkin.height);
+  c1.fillRect(spriteX, spriteY, playerSkin.width, playerSkin.height);
   
   c1.globalCompositeOperation = 'destination-in';
-  c1.drawImage(playerSkin, body.x, body.y);
+  c1.drawImage(playerSkin, spriteX, spriteY);
   c1.globalCompositeOperation = "source-over";
 }
 
@@ -62,10 +58,10 @@ function animate() {
   c1.clearRect(0, 0, canvas1.width, canvas1.height);
   c2.clearRect(0, 0, canvas2.width, canvas2.height);
 
-  c1.drawImage(playerSkin, body.x, body.y, playerSkin.width, playerSkin.height);
+  c1.drawImage(playerSkin, spriteX, spriteY, playerSkin.width, playerSkin.height);
   changeSkin(currentSkin);
 
-  c2.drawImage(bangs, body.x, body.y, playerSkin.width, playerSkin.height); 
+  c2.drawImage(bangs, spriteX, spriteY, playerSkin.width, playerSkin.height); 
 
   for (var skin of skins)
     skin.draw();
