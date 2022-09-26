@@ -15,7 +15,9 @@ var buzz = new Image();
 buzz.src = "images/hair/buzz.png"
 
 const spriteX = canvas1.width / 12;
-const spriteY = canvas1.height / 7
+const spriteY = canvas1.height / 7;
+const hairX = 400;
+const hairY = 50;
 
 class Skin extends Path2D {
   constructor(x, y, color) {
@@ -45,7 +47,11 @@ canvas2.addEventListener('click', (e) => {
     if (c2.isPointInPath(skin, e.offsetX, e.offsetY))
       currentSkin = skin.color;
   }
+
+  
 });
+
+
 
 function changeSkin(s) {
   c1.fillStyle = s;
@@ -62,10 +68,13 @@ function animate() {
   c1.clearRect(0, 0, canvas1.width, canvas1.height);
   c2.clearRect(0, 0, canvas2.width, canvas2.height);
 
-  c1.drawImage(playerSkin, spriteX, spriteY, playerSkin.width, playerSkin.height);
+  c1.drawImage(playerSkin, spriteX, spriteY);
   changeSkin(currentSkin);
 
-  c2.drawImage(bangs, spriteX, spriteY, playerSkin.width, playerSkin.height); 
+  c2.drawImage(bangs, spriteX, spriteY); 
+
+  c2.drawImage(bangs, hairX, hairY, 80, 80);
+  c2.drawImage(buzz, hairX + 80, hairY, 80, 80)
 
   for (var skin of skins)
     skin.draw();
