@@ -10,6 +10,9 @@ playerSkin.src = "images/body.png";
 var bangs = new Image();
 bangs.src = "images/bangs.png"
 
+var buzz = new Image();
+buzz.src = "images/buzz.png"
+
 const spriteX = canvas1.width / 12;
 const spriteY = canvas1.height / 7
 
