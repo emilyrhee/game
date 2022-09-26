@@ -20,4 +20,5 @@ canvas1 {
 input {  
   top: 300px;
   left: 60px; 
+  border: 6px solid #eee;
 }
