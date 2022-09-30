@@ -11,14 +11,6 @@ canvas {
   border: 1px solid #8e8383;
   top: 0px; 
   left: 0px;
-  image-rendering: -moz-crisp-edges;
-  image-rendering: -webkit-crisp-edges;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
 }
 
-input {  
-  top: 300px;
-  left: 60px; 
-  border: 6px solid #eee;
-}
+
