@@ -1,6 +1,41 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
+var keyMap = {};
+
+function keys(){
+  if (keyMap["w"]) player.y--;
+  if (keyMap["a"]) player.x--;
+  if (keyMap["s"]) player.y++;
+  if (keyMap["d"]) player.x++;
+  
+  if (keyMap["e"] && !menuShown) menuShown = true;
+  if (keyMap["e"] && menuShown) menuShown = false;
+}
+
+document.addEventListener('keydown', (event) => {
+  keyMap[event.key] = event.type == 'keydown'; // true
+});
+
+document.addEventListener('keyup', (event) => {
+  keyMap[event.key] = event.type == 'keydown'; //false
+});
+
+
+function enclose(map) {
+  if (this.x < 0) {
+    this.x = 0
+  } else if (this.x > map.w - this.w) {
+    this.x = map.w - this.w
+  }
+
+  if (this.y < 0) {
+    this.y = 0
+  } else if (this.y > map.h - this.h) {
+    this.y = map.h - this.h
+  }
+}
+
 class Sprite {
   constructor(x, y, src) {
     this.x = x;
@@ -23,20 +58,6 @@ class Sprite {
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
 
-function enclose(map) {
-  if (this.x < 0) {
-    this.x = 0
-  } else if (this.x > map.w - this.w) {
-    this.x = map.w - this.w
-  }
-
-  if (this.y < 0) {
-    this.y = 0
-  } else if (this.y > map.h - this.h) {
-    this.y = map.h - this.h
-  }
-}
-
 class MapRegion {
   constructor (src) {
     this.img = new Image();
@@ -50,40 +71,17 @@ class MapRegion {
   }
 }
 
-var keyMap = {};
-
-function keys(){
-  if (keyMap["w"]) player.y--;
-  if (keyMap["a"]) player.x--;
-  if (keyMap["s"]) player.y++;
-  if (keyMap["d"]) player.x++;
-  
-  if (keyMap["e"] && !menuShown) menuShown = true;
-  if (keyMap["e"] && menuShown) menuShown = false;
-}
-
-document.addEventListener('keydown', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; // true
-});
-
-document.addEventListener('keyup', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; //false
-});
-
 const map = new MapRegion("grass");
 // map.w = 1600;
 // map.h = 800;
 
 class Camera {
   constructor (x, y) {
-    // x and y are top-left coordinates of the camera rectangle relative to the map.
-    // This rectangle is exctaly canvas.width px wide and canvas.height px tall.
     this.x = x || 0;
     this.y = y || 0;
   }
   
   focus (canvas, map, player) {
-    // Account for half of player w/h to make their rectangle centered
     this.x = this.clamp(player.x - canvas.width / 2 + player.w / 2, 0, map.w - canvas.width);
     this.y = this.clamp(player.y - canvas.height / 2 + player.h / 2, 0, map.h - canvas.height);
   }
