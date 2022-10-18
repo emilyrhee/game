@@ -1,13 +1,14 @@
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 var keyMap = {};
 
 function keys(){
-  if (keyMap["w"]) player.y--;
-  if (keyMap["a"]) player.x--;
-  if (keyMap["s"]) player.y++;
-  if (keyMap["d"]) player.x++;
+  if (keyMap["w"]) player.y -= player.speed;
+  if (keyMap["a"]) player.x -= player.speed;
+  if (keyMap["s"]) player.y += player.speed;
+  if (keyMap["d"]) player.x += player.speed;
   
   if (keyMap["e"] && !menuShown) menuShown = true;
   if (keyMap["e"] && menuShown) menuShown = false;
@@ -44,6 +45,7 @@ class Sprite {
     this.h = 80;
     this.img = new Image();
     this.img.src = "images/" + src + ".png";
+    this.speed = 1.5;
   }
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
@@ -72,8 +74,8 @@ class MapRegion {
 }
 
 const map = new MapRegion("grass");
-// map.w = 1600;
-// map.h = 800;
+map.w = 1600;
+map.h = 800;
 
 class Camera {
   constructor (x, y) {
@@ -113,9 +115,9 @@ function animate() {
   // Draw
   keys();
 
-  map.draw(ctx);
-  player.draw();    
+  map.draw(ctx);  
   potionBlue.draw();
+  player.draw();  
 
   console.table(camera.x, camera.y, map.w, map.h)
 
