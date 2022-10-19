@@ -9,9 +9,6 @@ function keys(){
   if (keyMap["a"]) player.x -= player.speed;
   if (keyMap["s"]) player.y += player.speed;
   if (keyMap["d"]) player.x += player.speed;
-  
-  if (keyMap["e"] && !menuShown) menuShown = true;
-  if (keyMap["e"] && menuShown) menuShown = false;
 }
 
 document.addEventListener('keydown', (event) => {
@@ -65,7 +62,6 @@ class Sprite {
     } else if (this.y > 800 - this.h) {
       this.y = 800 - this.h
     }
-    console.log(this.h)
   }
   
   update (map) {
