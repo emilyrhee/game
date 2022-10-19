@@ -21,45 +21,6 @@ document.addEventListener('keydown', (event) => {
 document.addEventListener('keyup', (event) => {
   keyMap[event.key] = event.type == 'keydown'; //false
 });
-
-
-function enclose(map) {
-  if (this.x < 0) {
-    this.x = 0
-  } else if (this.x > map.w - this.w) {
-    this.x = map.w - this.w
-  }
-
-  if (this.y < 0) {
-    this.y = 0
-  } else if (this.y > map.h - this.h) {
-    this.y = map.h - this.h
-  }
-}
-
-class Sprite {
-  constructor(x, y, src) {
-    this.x = x;
-    this.y = y;
-    this.w = 80;
-    this.h = 80;
-    this.img = new Image();
-    this.img.src = "images/" + src + ".png";
-    this.speed = 1.5;
-  }
-  draw() {
-    ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-  }
-  update (map) {
-    keys();
-    // Optional, so they don't walk out of map boundaries
-    enclose(map);
-  }
-}
-
-const player = new Sprite(30, 40, "player");
-const potionBlue = new Sprite(200, 200, "potion_blue");
-
 class MapRegion {
   constructor (src) {
     this.img = new Image();
@@ -76,6 +37,45 @@ class MapRegion {
 const map = new MapRegion("grass");
 map.w = 1600;
 map.h = 800;
+
+
+class Sprite {
+  constructor(x, y, src) {
+    this.x = x;
+    this.y = y;
+    this.w = 80;
+    this.h = 80;
+    this.img = new Image();
+    this.img.src = "images/" + src + ".png";
+    this.speed = 1.5;
+  }
+  draw() {
+    ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+  }
+
+  enclose(map) {
+    if (this.x < 0) {
+      this.x = 0
+    } else if (this.x > 1600 - this.w) {
+      this.x = 1600 - this.w
+    }
+  
+    if (this.y < 0) {
+      this.y = 0
+    } else if (this.y > 800 - this.h) {
+      this.y = 800 - this.h
+    }
+    console.log(this.h)
+  }
+  
+  update (map) {
+    keys();
+    this.enclose(map);
+  }
+}
+
+const player = new Sprite(30, 40, "player");
+const potionBlue = new Sprite(200, 200, "potion_blue");
 
 class Camera {
   constructor (x, y) {
