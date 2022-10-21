@@ -64,14 +64,16 @@ const potionBlue = new Sprite(200, 200, "potion_blue");
 const items = [potionBlue];
 
 function collision(thing) {
-  if (player.x + player.w < thing.x ||
-      player.x > thing.x + thing.w ||
-      player.y + player.h < thing.y ||
-      player.y > thing.y + thing.h) {
+  let halfWidth = thing.w / 2;
+  let halfHeight = thing.h / 2;
+  if (player.x + player.w < thing.x + halfWidth ||    // left
+      player.x > thing.x + thing.w - halfWidth ||     // right
+      player.y + player.h < thing.y + halfHeight ||   // top
+      player.y > thing.y + thing.h - halfHeight) {    // bottom
   return;
   }
-  // thing.x = -80;
-  // thing.y = -80;
+  thing.x = -80;
+  thing.y = -80;
 }
 
 var keyMap = {};
@@ -139,6 +141,6 @@ function animate() {
 
   player.draw();  
 
-    collision(potionBlue);
+  collision(potionBlue);
 }
 animate();
