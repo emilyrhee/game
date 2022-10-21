@@ -2,22 +2,6 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-var keyMap = {};
-
-function keys(){
-  if (keyMap["w"]) player.y -= player.speed;
-  if (keyMap["a"]) player.x -= player.speed;
-  if (keyMap["s"]) player.y += player.speed;
-  if (keyMap["d"]) player.x += player.speed;
-}
-
-document.addEventListener('keydown', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; // true
-});
-
-document.addEventListener('keyup', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; //false
-});
 class MapRegion {
   constructor (src) {
     this.img = new Image();
@@ -44,7 +28,7 @@ class Sprite {
     this.h = 80;
     this.img = new Image();
     this.img.src = "images/" + src + ".png";
-    this.speed = 1.5;
+    this.speed = 3;
   }
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
@@ -65,13 +49,30 @@ class Sprite {
   }
   
   update (map) {
-    keys();
     this.enclose(map);
   }
 }
 
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
+
+
+var keyMap = {};
+
+function keys(){
+  if (keyMap["w"]) player.y -= player.speed;
+  if (keyMap["a"]) player.x -= player.speed;
+  if (keyMap["s"]) player.y += player.speed;
+  if (keyMap["d"]) player.x += player.speed;
+}
+
+document.addEventListener('keydown', (event) => {
+  keyMap[event.key] = event.type == 'keydown'; // true
+});
+
+document.addEventListener('keyup', (event) => {
+  keyMap[event.key] = event.type == 'keydown'; //false
+});
 
 class Camera {
   constructor (x, y) {
