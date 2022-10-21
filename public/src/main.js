@@ -28,11 +28,11 @@ class Inventory {
 
 }
 class Sprite {
-  constructor(x, y, src) {
+  constructor(x, y, src, w, h) {
     this.x = x;
     this.y = y;
-    this.w = 80;
-    this.h = 80;
+    this.w = w || 80;
+    this.h = h || 80;
     this.img = new Image();
     this.img.src = "images/" + src + ".png";
     this.speed = 3;
@@ -58,7 +58,6 @@ class Sprite {
   update (map) {
     this.enclose(map);
   }
-
 }
 
 const player = new Sprite(30, 40, "player");
