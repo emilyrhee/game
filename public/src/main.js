@@ -10,16 +10,14 @@ class MapRegion {
     this.h = this.img.height;
   }
   
-  draw (ctx) {
-    ctx.drawImage(this.img, 0, 0)
+  draw () {
+    ctx.drawImage(this.img, 0, 0);
   }
 }
 
 const map = new MapRegion("grass");
-mapReady = false;
-map.img.onload = function() {
-  mapReady = true;
-};
+map.w = 1600;
+map.h = 800;
 
 class Inventory {
   constructor() {
@@ -70,10 +68,10 @@ function collision(thing) {
       player.x > thing.x + thing.w ||
       player.y + player.h < thing.y ||
       player.y > thing.y + thing.h) {
-    return;
-
+  return;
   }
-  console.log(true);
+  // thing.x = -80;
+  // thing.y = -80;
 }
 
 var keyMap = {};
@@ -133,7 +131,7 @@ function animate() {
 
   keys();
 
-  map.draw(ctx);
+  map.draw();
 
   for (let i = 0; i < items.length; i++) {
     items[i].draw();
