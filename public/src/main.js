@@ -21,7 +21,7 @@ map.h = 800;
 
 const inventory = {
   holdLimit: 1,
-  items: 0
+  items: []
 }
 class Sprite {
   constructor(x, y, src, w, h) {
@@ -58,8 +58,9 @@ class Sprite {
 
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
+const potionBlue2 = new Sprite(300, 200, "potion_blue");
 
-const items = [potionBlue];
+const items = [potionBlue, potionBlue2];
 
 function collision(thing) {
   let halfWidth = thing.w / 2;
@@ -70,11 +71,11 @@ function collision(thing) {
       player.y > thing.y + thing.h - halfHeight) {    // bottom
   return;
   }
-  if (inventory.holdLimit > inventory.items) {
+  if (inventory.holdLimit > inventory.items.length) {
     thing.x = -80;
     thing.y = -80;
   }
-  inventory.items++;
+  inventory.items.push(thing);
 }
 
 var keyMap = {};
