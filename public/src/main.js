@@ -19,11 +19,9 @@ const map = new MapRegion("grass");
 map.w = 1600;
 map.h = 800;
 
-class Inventory {
-  constructor() {
-
-  }
-
+const inventory = {
+  holdLimit: 1,
+  items: 0
 }
 class Sprite {
   constructor(x, y, src, w, h) {
@@ -72,8 +70,11 @@ function collision(thing) {
       player.y > thing.y + thing.h - halfHeight) {    // bottom
   return;
   }
-  thing.x = -80;
-  thing.y = -80;
+  if (inventory.holdLimit > inventory.items) {
+    thing.x = -80;
+    thing.y = -80;
+  }
+  inventory.items++;
 }
 
 var keyMap = {};
