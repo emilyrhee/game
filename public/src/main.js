@@ -37,8 +37,6 @@ class Sprite {
   }
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-    this.path.rect(this.x, this.y, this.w, this.h);
-    ctx.stroke(this.path)
   }
 
   enclose(map) {
@@ -64,13 +62,13 @@ class Sprite {
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
 
+const items = [potionBlue];
+
 function collision() {
-  if (
-    player.x + player.w < potionBlue.x ||
-    player.x > potionBlue.x + potionBlue.w ||
-    player.y + player.h < potionBlue.y ||
-    player.y > potionBlue.y + potionBlue.h
-  ) {
+  if (player.x + player.w < potionBlue.x ||
+      player.x > potionBlue.x + potionBlue.w ||
+      player.y + player.h < potionBlue.y ||
+      player.y > potionBlue.y + potionBlue.h) {
     return;
   }
   console.log(true);
@@ -133,13 +131,14 @@ function animate() {
 
   keys();
 
-  map.draw(ctx);  
-  potionBlue.draw();
+  map.draw(ctx);
+
+  for (let i = 0; i < items.length; i++) {
+    items[i].draw();
+  }
+
   player.draw();  
 
   collision();
-
-  console.table(player.path)
-
 }
 animate();
