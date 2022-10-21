@@ -19,7 +19,12 @@ const map = new MapRegion("grass");
 map.w = 1600;
 map.h = 800;
 
+class Inventory {
+  constructor() {
 
+  }
+
+}
 class Sprite {
   constructor(x, y, src) {
     this.x = x;
@@ -32,6 +37,8 @@ class Sprite {
   }
   draw() {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    this.path.rect(this.x, this.y, this.w, this.h);
+    ctx.stroke(this.path)
   }
 
   enclose(map) {
@@ -51,19 +58,35 @@ class Sprite {
   update (map) {
     this.enclose(map);
   }
+
 }
 
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
 
+function collision() {
+  if (
+    player.x + player.w < potionBlue.x ||
+    player.x > potionBlue.x + potionBlue.w ||
+    player.y + player.h < potionBlue.y ||
+    player.y > potionBlue.y + potionBlue.h
+  ) {
+    return;
+  }
+  console.log(true);
+}
 
 var keyMap = {};
+var menuShown = false;
 
 function keys(){
   if (keyMap["w"]) player.y -= player.speed;
   if (keyMap["a"]) player.x -= player.speed;
   if (keyMap["s"]) player.y += player.speed;
   if (keyMap["d"]) player.x += player.speed;
+
+  if (keyMap["e"] && !menuShown) menuShown = true;
+  if (keyMap["e"] && menuShown) menuShown = false;
 }
 
 document.addEventListener('keydown', (event) => {
@@ -106,17 +129,17 @@ function animate() {
   player.update(map);
 
   camera.focus(canvas, map, player);
-  // Flip the sign b/c positive shifts the canvas to the right, negative - to the left
   ctx.translate(-camera.x, -camera.y);
 
-  // Draw
   keys();
 
   map.draw(ctx);  
   potionBlue.draw();
   player.draw();  
 
-  console.table(camera.x, camera.y, map.w, map.h)
+  collision();
+
+  console.table(player.path)
 
 }
 animate();
