@@ -16,8 +16,10 @@ class MapRegion {
 }
 
 const map = new MapRegion("grass");
-map.w = 1600;
-map.h = 800;
+mapReady = false;
+map.img.onload = function() {
+  mapReady = true;
+};
 
 class Inventory {
   constructor() {
@@ -64,12 +66,13 @@ const potionBlue = new Sprite(200, 200, "potion_blue");
 
 const items = [potionBlue];
 
-function collision() {
-  if (player.x + player.w < potionBlue.x ||
-      player.x > potionBlue.x + potionBlue.w ||
-      player.y + player.h < potionBlue.y ||
-      player.y > potionBlue.y + potionBlue.h) {
+function collision(thing) {
+  if (player.x + player.w < thing.x ||
+      player.x > thing.x + thing.w ||
+      player.y + player.h < thing.y ||
+      player.y > thing.y + thing.h) {
     return;
+
   }
   console.log(true);
 }
@@ -139,6 +142,6 @@ function animate() {
 
   player.draw();  
 
-  collision();
+    collision(potionBlue);
 }
 animate();
