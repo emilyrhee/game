@@ -136,13 +136,13 @@ function animate() {
   keys();
 
   map.draw();
-
   for (let i = 0; i < items.length; i++) {
     items[i].draw();
   }
-
   player.draw();  
 
-  collision(potionBlue);
+  for (let i = 0; i < items.length; i++) {
+    collision(items[i]);
+  }
 }
 animate();
