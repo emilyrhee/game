@@ -59,6 +59,7 @@ class Sprite {
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
 const potionBlue2 = new Sprite(300, 200, "potion_blue");
+const menu = new Sprite(20, 20, "menu");
 
 const items = [potionBlue, potionBlue2];
 
@@ -78,26 +79,30 @@ function collision(thing) {
   inventory.items.push(thing);
 }
 
-var keyMap = {};
-var menuShown = false;
+var pressKeyMap = {};
+var holdDownKeyMap = {};
 
-function keys(){
-  if (keyMap["w"]) player.y -= player.speed;
-  if (keyMap["a"]) player.x -= player.speed;
-  if (keyMap["s"]) player.y += player.speed;
-  if (keyMap["d"]) player.x += player.speed;
-
-  if (keyMap["e"] && !menuShown) menuShown = true;
-  if (keyMap["e"] && menuShown) menuShown = false;
-}
-
-document.addEventListener('keydown', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; // true
+document.addEventListener("keydown", (event) => {
+  pressKeyMap[event.key] = event.type == "keydown"; // true
+  holdDownKeyMap[event.key] = event.type == "keydown"; // true
 });
 
-document.addEventListener('keyup', (event) => {
-  keyMap[event.key] = event.type == 'keydown'; //false
+document.addEventListener("keyup", (event) => {
+  if (pressKeyMap[event.key]) {
+    if (pressKeyMap["e"]) console.log("menu.open();");
+
+    pressKeyMap[event.key] = event.type == "keydown"; // false
+  }
+  
+  holdDownKeyMap[event.key] = event.type == "keydown"; // false
 });
+
+function holdDownKeys() {
+  if (holdDownKeyMap["w"]) player.y -= player.speed;
+  if (holdDownKeyMap["a"]) player.x -= player.speed;
+  if (holdDownKeyMap["s"]) player.y += player.speed;
+  if (holdDownKeyMap["d"]) player.x += player.speed;
+} 
 
 class Camera {
   constructor (x, y) {
@@ -133,7 +138,7 @@ function animate() {
   camera.focus(canvas, map, player);
   ctx.translate(-camera.x, -camera.y);
 
-  keys();
+  holdDownKeys();
 
   map.draw();
   for (let i = 0; i < items.length; i++) {
@@ -144,5 +149,7 @@ function animate() {
   for (let i = 0; i < items.length; i++) {
     collision(items[i]);
   }
+
+  // console.log(holdDownKeyMap)
 }
 animate();
