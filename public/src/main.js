@@ -59,7 +59,6 @@ class Sprite {
 const player = new Sprite(30, 40, "player");
 const potionBlue = new Sprite(200, 200, "potion_blue");
 const potionBlue2 = new Sprite(300, 200, "potion_blue");
-const menu = new Sprite(20, 20, "menu");
 
 const items = [potionBlue, potionBlue2];
 
@@ -79,6 +78,29 @@ function collision(thing) {
   inventory.items.push(thing);
 }
 
+const menu = {
+  isShown: false,
+  x: -100,
+  y: -100,
+  draw: function() {
+    ctx.beginPath();
+    ctx.rect(menu.x, menu.y, 150, 100);
+    ctx.stroke();
+  },
+  toggle: function() {
+    if (menu.isShown) {
+      menu.isShown = false;
+      menu.x = -100;
+      menu.y = -100;
+    } else {
+      menu.isShown = true;
+      menu.x = 100;
+      menu.y = 100;
+    }
+  } 
+}
+
+
 var pressKeyMap = {};
 var holdDownKeyMap = {};
 
@@ -89,7 +111,7 @@ document.addEventListener("keydown", (event) => {
 
 document.addEventListener("keyup", (event) => {
   if (pressKeyMap[event.key]) {
-    if (pressKeyMap["e"]) console.log("menu.open();");
+    if (pressKeyMap["e"]) menu.toggle();
 
     pressKeyMap[event.key] = event.type == "keydown"; // false
   }
@@ -150,6 +172,6 @@ function animate() {
     collision(items[i]);
   }
 
-  // console.log(holdDownKeyMap)
+  menu.draw();
 }
 animate();
