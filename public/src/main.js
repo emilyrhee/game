@@ -130,10 +130,6 @@ function holdDownKeys() {
 const camera = {
   x: 0,
   y: 0,
-  focus: function(canvas, map, player) {
-    this.x = this.clamp(player.x - canvas.width / 2 + player.w / 2, 0, map.w - canvas.width);
-    this.y = this.clamp(player.y - canvas.height / 2 + player.h / 2, 0, map.h - canvas.height);
-  },
   clamp: function(coord, min, max) {
     if (coord < min) {
       return min
@@ -142,7 +138,11 @@ const camera = {
     } else {
       return coord
     }
-  }
+  },
+  focus: function(canvas, map, player) {
+    this.x = this.clamp(player.x - canvas.width / 2 + player.w / 2, 0, map.w - canvas.width);
+    this.y = this.clamp(player.y - canvas.height / 2 + player.h / 2, 0, map.h - canvas.height);
+  },
 }
 
 function animate() {
