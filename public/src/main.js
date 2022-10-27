@@ -1,7 +1,5 @@
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-
 class MapRegion {
   constructor (src) {
     this.img = new Image();
@@ -79,27 +77,30 @@ function collision(thing) {
 }
 
 const menu = {
+  canvas: document.getElementById('menu-canvas'),
+  ctx: canvas.getContext('2d'),
   isShown: false,
   x: -100,
   y: -100,
+  w: 150,
+  h: 100,
   draw: function() {
-    ctx.beginPath();
-    ctx.rect(menu.x, menu.y, 150, 100);
-    ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.rect(menu.x, menu.y, menu.w, menu.h);
+    this.ctx.stroke();
   },
   toggle: function() {
     if (menu.isShown) {
-      menu.isShown = false;
-      menu.x = -100;
-      menu.y = -100;
+      this.isShown = false;
+      this.x = -100;
+      this.y = -100;
     } else {
-      menu.isShown = true;
-      menu.x = 100;
-      menu.y = 100;
+      this.isShown = true;
+      this.x = 200;
+      this.y = 200;
     }
   } 
 }
-
 
 var pressKeyMap = {};
 var holdDownKeyMap = {};
@@ -126,18 +127,14 @@ function holdDownKeys() {
   if (holdDownKeyMap["d"]) player.x += player.speed;
 } 
 
-class Camera {
-  constructor (x, y) {
-    this.x = x || 0;
-    this.y = y || 0;
-  }
-  
-  focus (canvas, map, player) {
+const camera = {
+  x: 0,
+  y: 0,
+  focus: function(canvas, map, player) {
     this.x = this.clamp(player.x - canvas.width / 2 + player.w / 2, 0, map.w - canvas.width);
     this.y = this.clamp(player.y - canvas.height / 2 + player.h / 2, 0, map.h - canvas.height);
-  }
-  
-  clamp (coord, min, max) {
+  },
+  clamp: function(coord, min, max) {
     if (coord < min) {
       return min
     } else if (coord > max) {
@@ -148,16 +145,17 @@ class Camera {
   }
 }
 
-const camera = new Camera()
-
 function animate() {
   requestAnimationFrame(animate);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  menu.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   player.update(map);
 
   camera.focus(canvas, map, player);
+
   ctx.translate(-camera.x, -camera.y);
 
   holdDownKeys();
