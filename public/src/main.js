@@ -77,17 +77,15 @@ function collision(thing) {
 }
 
 const menu = {
-  canvas: document.getElementById('menu-canvas'),
-  ctx: canvas.getContext('2d'),
   isShown: false,
   x: -100,
   y: -100,
   w: 150,
   h: 100,
   draw: function() {
-    this.ctx.beginPath();
-    this.ctx.rect(menu.x, menu.y, menu.w, menu.h);
-    this.ctx.stroke();
+    ctx.beginPath();
+    ctx.rect(menu.x, menu.y, menu.w, menu.h);
+    ctx.stroke();
   },
   toggle: function() {
     if (menu.isShown) {
@@ -145,12 +143,21 @@ const camera = {
   },
 }
 
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener('resize', function() {
+ resizeCanvas();
+});
+
 function animate() {
   requestAnimationFrame(animate);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  menu.ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   player.update(map);
 

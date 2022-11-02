@@ -8,7 +8,6 @@ html, body {
 }
 
 canvas {
-  border: 1px solid #8e8383;
   top: 0px; 
   left: 0px;
 }
