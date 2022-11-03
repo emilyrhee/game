@@ -78,8 +78,8 @@ function collision(thing) {
 
 const menu = {
   isShown: false,
-  x: -100,
-  y: -100,
+  x: -400,
+  y: -400,
   w: 150,
   h: 100,
   draw: function() {
@@ -90,8 +90,8 @@ const menu = {
   toggle: function() {
     if (menu.isShown) {
       this.isShown = false;
-      this.x = -100;
-      this.y = -100;
+      this.x = -400;
+      this.y = -400;
     } else {
       this.isShown = true;
       this.x = 200;
