@@ -22,30 +22,41 @@ const inventory = {
   items: []
 }
 class Sprite {
-  constructor(x, y, src, w, h) {
-    this.x = x;
-    this.y = y;
-    this.w = w || 80;
-    this.h = h || 80;
+  constructor(src, x, y, w, h) {
+    this.dx = x;
+    this.dy = y;
+    this.dw = w || 80;
+    this.dh = h || 80;
     this.img = new Image();
     this.img.src = "images/" + src + ".png";
     this.speed = 3;
   }
+
+  setSource(sx, sy, sw, sh) {
+    this.sx = sx;
+    this.sy = sy;
+    this.sw = sw;
+    this.sh = sh;
+  }
+
   draw() {
-    ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+    if (this.sx == null)
+      ctx.drawImage(this.img, this.dx, this.dy, this.dw, this.dh);
+    else 
+      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.dx, this.dy, this.dw, this.dh);
   }
 
   enclose(map) {
-    if (this.x < 0) {
-      this.x = 0
-    } else if (this.x > 1600 - this.w) {
-      this.x = 1600 - this.w
+    if (this.dx < 0) {
+      this.dx = 0
+    } else if (this.dx > 1600 - this.dw) {
+      this.dx = 1600 - this.dw
     }
   
-    if (this.y < 0) {
-      this.y = 0
-    } else if (this.y > 800 - this.h) {
-      this.y = 800 - this.h
+    if (this.dy < 0) {
+      this.dy = 0
+    } else if (this.dy > 800 - this.dh) {
+      this.dy = 800 - this.dh
     }
   }
   
@@ -54,24 +65,29 @@ class Sprite {
   }
 }
 
-const player = new Sprite(30, 40, "player");
-const potionBlue = new Sprite(200, 200, "potion_blue");
-const potionBlue2 = new Sprite(300, 200, "potion_blue");
+const player = new Sprite("player_front", 30, 40);
+player.setSource(0, 0, 160, 160);
+const potionBlue = new Sprite("potion_blue", 200, 200);
+const potionBlue2 = new Sprite("potion_blue", 300, 200);
 
 const items = [potionBlue, potionBlue2];
 
+function animateSprite() {
+
+};
+
 function collision(thing) {
-  let halfWidth = thing.w / 2;
-  let halfHeight = thing.h / 2;
-  if (player.x + player.w < thing.x + halfWidth ||    // left
-      player.x > thing.x + thing.w - halfWidth ||     // right
-      player.y + player.h < thing.y + halfHeight ||   // top
-      player.y > thing.y + thing.h - halfHeight) {    // bottom
+  let halfWidth = thing.dw / 2;
+  let halfHeight = thing.dh / 2;
+  if (player.dx + player.dw < thing.dx + halfWidth ||    // left
+      player.dx > thing.dx + thing.dw - halfWidth ||     // right
+      player.dy + player.dh < thing.dy + halfHeight ||   // top
+      player.dy > thing.dy + thing.dh - halfHeight) {    // bottom
   return;
   }
   if (inventory.holdLimit > inventory.items.length) {
-    thing.x = -80;
-    thing.y = -80;
+    thing.dx = -80;
+    thing.dy = -80;
   }
   inventory.items.push(thing);
 }
@@ -119,10 +135,10 @@ document.addEventListener("keyup", (event) => {
 });
 
 function holdDownKeys() {
-  if (holdDownKeyMap["w"]) player.y -= player.speed;
-  if (holdDownKeyMap["a"]) player.x -= player.speed;
-  if (holdDownKeyMap["s"]) player.y += player.speed;
-  if (holdDownKeyMap["d"]) player.x += player.speed;
+  if (holdDownKeyMap["w"]) player.dy -= player.speed;
+  if (holdDownKeyMap["a"]) player.dx -= player.speed;
+  if (holdDownKeyMap["s"]) player.dy += player.speed;
+  if (holdDownKeyMap["d"]) player.dx += player.speed;
 } 
 
 const camera = {
@@ -138,8 +154,8 @@ const camera = {
     }
   },
   focus: function(canvas, map, player) {
-    this.x = this.clamp(player.x - canvas.width / 2 + player.w / 2, 0, map.w - canvas.width);
-    this.y = this.clamp(player.y - canvas.height / 2 + player.h / 2, 0, map.h - canvas.height);
+    this.x = this.clamp(player.dx - canvas.width / 2 + player.dw / 2, 0, map.w - canvas.width);
+    this.y = this.clamp(player.dy - canvas.height / 2 + player.dh / 2, 0, map.h - canvas.height);
   },
 }
 
@@ -178,5 +194,7 @@ function animate() {
   }
 
   menu.draw();
+  animateSprite()
 }
+
 animate();
