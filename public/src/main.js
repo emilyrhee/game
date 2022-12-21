@@ -39,11 +39,19 @@ class Sprite {
     this.sh = sh;
   }
 
+  setFrame(frame, frameCycle) {
+    this.frame = frame;
+    this.frameCycle = frameCycle;
+  }
+
   draw() {
     if (this.sx == null)
       ctx.drawImage(this.img, this.dx, this.dy, this.dw, this.dh);
-    else 
-      ctx.drawImage(this.img, this.sx, this.sy, this.sw, this.sh, this.dx, this.dy, this.dw, this.dh);
+    else {
+      ctx.drawImage(this.img, 
+                    this.frame * this.dw * 2, 0, this.sw, this.sh, 
+                    this.dx, this.dy, this.dw, this.dh);
+     }
   }
 
   enclose(map) {
@@ -67,13 +75,16 @@ class Sprite {
 
 const player = new Sprite("player_front", 30, 40);
 player.setSource(0, 0, 160, 160);
+player.setFrame(0, [0, 1, 0, 2]);
 const potionBlue = new Sprite("potion_blue", 200, 200);
 const potionBlue2 = new Sprite("potion_blue", 300, 200);
 
 const items = [potionBlue, potionBlue2];
 
-function animateSprite() {
-
+function animateSprite(s) {
+  s.frame++;
+  if (s.frame >= s.frameCycle.length) 
+    s.frame = 0;
 };
 
 function collision(thing) {
@@ -183,18 +194,18 @@ function animate() {
 
   holdDownKeys();
 
+  for (let i = 0; i < items.length; i++) {
+    collision(items[i]);
+  }
+
   map.draw();
   for (let i = 0; i < items.length; i++) {
     items[i].draw();
   }
   player.draw();  
-
-  for (let i = 0; i < items.length; i++) {
-    collision(items[i]);
-  }
-
   menu.draw();
-  animateSprite()
+
+  animateSprite(player);
 }
 
 animate();
