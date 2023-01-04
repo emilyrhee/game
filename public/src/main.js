@@ -74,16 +74,25 @@ class Sprite {
 
 const player = new Sprite("player_front", 30, 40);
 player.setSource(0, 0, 160, 160);
-player.setFrame(0, [0, 1, 0, 2]);
+player.setFrame(0, [0, 1, 2, 1]);
 const potionBlue = new Sprite("potion_blue", 200, 200);
 const potionBlue2 = new Sprite("potion_blue", 300, 200);
 
 const items = [potionBlue, potionBlue2];
 
-function animateSprite(s) {
-  s.frame++;
-  if (s.frame >= s.frameCycle.length) 
+function animateSprite(s, t) {
+  for (const frame of player.frameCycle) {
+    
+  }
+
+  if (t >= 1) 
     s.frame = 0;
+  else if (t >= 0.75)
+    s.frame = 1;
+  else if (t >= 0.5)
+    s.frame = 2;
+  else if (t >= 0.25)
+    s.frame = 1;
 };
 
 function collision(thing) {
@@ -180,11 +189,24 @@ window.addEventListener('resize', function() {
  resizeCanvas();
 });
 
-function animate() {
-  requestAnimationFrame(animate);
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  
+const duration = 1000;
+let starttime = null;
+
+function animate(timestamp) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (!starttime)
+    starttime = timestamp;
+
+  const runtime = timestamp - starttime;
+  const relativeProgress = runtime / duration;
+
+  if (runtime < duration)
+    requestAnimationFrame(animate);
+
+  console.log(relativeProgress);
+  
+  animateSprite(player, relativeProgress);
 
   player.update(map);
   camera.focus(canvas, map, player);
@@ -205,5 +227,7 @@ function animate() {
 
   animateSprite(player);
 }
+
+requestAnimationFrame(animate);
 
 animate();
