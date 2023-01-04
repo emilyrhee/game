@@ -153,12 +153,25 @@ document.addEventListener("keyup", (event) => {
   holdDownKeyMap[event.key] = event.type == "keydown"; // false
 });
 
-function holdDownKeys() {
+function holdDownKeys(t) {
   let speed = 3;
-  if (holdDownKeyMap["w"]) player.dy -= speed;
-  if (holdDownKeyMap["a"]) player.dx -= speed;
-  if (holdDownKeyMap["s"]) player.dy += speed;
-  if (holdDownKeyMap["d"]) player.dx += speed;
+
+  if (holdDownKeyMap["w"]) {
+    player.dy -= speed;
+    animateSprite(player, t);
+  }
+  if (holdDownKeyMap["a"]) {
+    player.dx -= speed;
+    animateSprite(player, t);
+  }
+  if (holdDownKeyMap["s"]) {
+    player.dy += speed;
+    animateSprite(player, t);
+  }
+  if (holdDownKeyMap["d"]) {
+    player.dx += speed;
+    animateSprite(player, t);
+  }
 } 
 
 const camera = {
@@ -212,7 +225,7 @@ function animate(timestamp) {
   camera.focus(canvas, map, player);
   ctx.translate(-camera.x, -camera.y);
 
-  holdDownKeys();
+  holdDownKeys(relativeProgress);
 
   for (let i = 0; i < items.length; i++) {
     collision(items[i]);
