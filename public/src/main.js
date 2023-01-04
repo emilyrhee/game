@@ -29,7 +29,6 @@ class Sprite {
     this.dh = h || 80;
     this.img = new Image();
     this.img.src = "images/" + src + ".png";
-    this.speed = 3;
   }
 
   setSource(sx, sy, sw, sh) {
@@ -146,10 +145,11 @@ document.addEventListener("keyup", (event) => {
 });
 
 function holdDownKeys() {
-  if (holdDownKeyMap["w"]) player.dy -= player.speed;
-  if (holdDownKeyMap["a"]) player.dx -= player.speed;
-  if (holdDownKeyMap["s"]) player.dy += player.speed;
-  if (holdDownKeyMap["d"]) player.dx += player.speed;
+  let speed = 3;
+  if (holdDownKeyMap["w"]) player.dy -= speed;
+  if (holdDownKeyMap["a"]) player.dx -= speed;
+  if (holdDownKeyMap["s"]) player.dy += speed;
+  if (holdDownKeyMap["d"]) player.dx += speed;
 } 
 
 const camera = {
